@@ -46,11 +46,12 @@ app.use('/users', userRoutes)
 app.use('/posts', postRoutes)
 
 const PORT = process.env.PORT || 6001
-mongoose.connect(process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => {
-  app.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`))
-}).catch((error) => console.log(`${error} did not connect`))
+mongoose
+.connect(process.env.MONGO_URL)
+.then(() => console.log('Database Connection successful'))
+.catch((err) => console.log(err))
 
+app.listen(PORT, () => {
+  console.log(`Backend server is running on port ${PORT}`)
+})
 
