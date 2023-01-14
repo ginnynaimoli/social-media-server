@@ -15,6 +15,7 @@ import postRoutes from './routes/postRoutes.js'
 import { createPost } from './controllers/postControllers.js'
 import { verifyToken } from './middlewares/verifyToken.js'
 
+const PORT = 4000
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 dotenv.config()
@@ -24,8 +25,8 @@ app.use(express.json())
 app.use(helmet())
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }))
 app.use(morgan("common"))
-app.use(bodyParser.json({ limit: "30mb", extended: true }))
-app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }))
+app.use(bodyParser.json({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use("/assets", express.static(path.join(__dirname, 'public/assets')))
 
 const storage = multer.diskStorage({
@@ -45,7 +46,6 @@ app.use('/auth', authRoutes)
 app.use('/users', userRoutes)
 app.use('/posts', postRoutes)
 
-const PORT = process.env.PORT || 6001
 mongoose.set("strictQuery", true)
 mongoose
 .connect(process.env.MONGO_URL)
